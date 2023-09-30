@@ -1,3 +1,4 @@
+#authorization code flow:
 from dotenv import load_dotenv
 import os
 import base64
@@ -9,6 +10,7 @@ load_dotenv()
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
+#func to retrieve token:
 def get_token():
     author_str = client_id + ":" + client_secret
     author_bytes = author_str.encode("utf-8")
@@ -26,13 +28,15 @@ def get_token():
     token = json_result["access_token"]
     return token
 
+#gets authorization header, returns token
 def get_auth_header(token):
     return {"Authorization": "Bearer " + token}
 
+#implements spotify's api and searches for artist name
 def search_for_artist(token, artist_name):
     url = "https://api.spotify.com/v1/search"
     headers = get_auth_header(token)
-    query = f"?q={artist_name}&type=artist&limit=1"
+    query = f"?q={artist_name}&type=artist&limit=1" #can do more than one: i.e., artist_name, song etc
 
     query_url = url + query
     result = get(query_url, headers=headers)
@@ -52,9 +56,9 @@ def get_songs_by_artists(token, artist_id):
 
 
 token = get_token()
-result = search_for_artist(token, "Doja Cat")
+result = search_for_artist(token, "Doja Cat") #returns doja cat's top 10 tracks
 artist_id = result["id"]
 songs = get_songs_by_artists(token, artist_id)
 
 for idx, song in enumerate(songs):
-    print(f"{idx + 1}. {song['name']}")
+    print(f"{idx + 1}. {song['name']}") #formats the top 10 songs by number and song title
