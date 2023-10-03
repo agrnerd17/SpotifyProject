@@ -17,3 +17,18 @@ if (!code) {
     populateUI(profile)
 }
 
+async function redirectToAuthCodeFlow(clientId) {
+    //redirect to Spotify auth page
+}
+
+async function getAccessToken(clientId, code) {
+    //gets access token for code
+}
+
+async function fetchProfile(token) {
+    //call web API
+}
+
+function populateUI(profile) {
+    //update UI with profile data
+}
